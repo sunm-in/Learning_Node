@@ -46,14 +46,16 @@
         <p>글번호: <%= posts[i]._id %></p>
         <h4 style="margin: 0">제목: <%= posts[i].title %></h4>
         <p style="margin: 1% 0">날짜: <%= posts[i].date %></p>
-        <button data-id="<%= posts[i]._id %>" class="btn btn-danger delete">
+        <a class="btn btn-success" href="/edit/<%= posts[i]._id %>">수정</a>
+        <button
+          data-id="<%= posts[i]._id %>"
+          class="btn btn-danger delete ml-2 mr-2"
+        >
           삭제
         </button>
-        <a
-          style="color: black; margin-left: 3%"
-          href="/detail/<%= posts[i]._id %> "
-          >🔍상세보기</a
-        >
+        <a href="/detail/<%= posts[i]._id %> " class="btn btn-info">
+          🔍상세보기
+        </a>
       </li>
       <% } %>
     </ul>
