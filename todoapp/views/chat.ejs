@@ -57,20 +57,26 @@
 
     <script>
       let targetRoomId;
-      $('.list-group-item').click(function () {
-        $(this).css('background-color', '#eee');
+      let eventSource;
+      $(".list-group-item").click(function () {
+        $(this).css("background-color", "#eee");
         targetRoomId = this.dataset.id;
+
+        eventSource = new EventSource("/message" + targetRoomId);
+        eventSource.addEventListener("test", function (e) {
+          console.log(JSON.parse(e.data));
+        });
       });
 
-      $('#send').click(function () {
-        const chatContent = $('#chat-input').val();
+      $("#send").click(function () {
+        const chatContent = $("#chat-input").val();
         const sendInfo = {
           parent: targetRoomId,
           content: chatContent,
         };
-        $.post('/message', sendInfo)
+        $.post("/message", sendInfo)
           .then(() => {
-            console.log('전송성공');
+            console.log("전송성공");
           })
           .catch((err) => {
             console.error(err);
