@@ -3,10 +3,7 @@
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
     <!-- Bootstrap CSS -->
     <link
@@ -58,25 +55,33 @@
     <script>
       let targetRoomId;
       let eventSource;
-      $(".list-group-item").click(function () {
-        $(this).css("background-color", "#eee");
+      $('.list-group-item').click(function () {
+        $(this).css('background-color', '#eee');
         targetRoomId = this.dataset.id;
+        $('.chat-content').html('');
 
-        eventSource = new EventSource("/message" + targetRoomId);
-        eventSource.addEventListener("test", function (e) {
-          console.log(JSON.parse(e.data));
+        if (eventSource != undefined) {
+          eventSource.close();
+        }
+
+        eventSource = new EventSource('/message/' + targetRoomId);
+        eventSource.addEventListener('test', function (e) {
+          const chatMessage = JSON.parse(e.data);
+          chatMessage.forEach((i) => {
+            $('.chat-content').append('<li><span class="chat-box">' + i.content + '</span></li>');
+          });
         });
       });
 
-      $("#send").click(function () {
-        const chatContent = $("#chat-input").val();
+      $('#send').click(function () {
+        const chatContent = $('#chat-input').val();
         const sendInfo = {
           parent: targetRoomId,
           content: chatContent,
         };
-        $.post("/message", sendInfo)
+        $.post('/message', sendInfo)
           .then(() => {
-            console.log("전송성공");
+            console.log('전송성공');
           })
           .catch((err) => {
             console.error(err);
