@@ -2,7 +2,7 @@ require('dotenv').config();
 const { PORT, DB_URL } = process.env;
 const express = require('express');
 const app = express();
-const port = PORT || 4000;
+const port = PORT || 5000;
 const http = require('http').createServer(app);
 const cors = require('cors');
 const { User } = require('./models/User');
@@ -62,7 +62,10 @@ app.post('/api/users/login', (req, res) => {
 
       user.generateToken((err, user) => {
         if (err) return res.status(400).send(err);
-        res.cookie('x_auth', user.token).status(200).json({ loginSuccess: true, userId: user._id });
+        res
+          .cookie('x_auth', user.token)
+          .status(200)
+          .json({ loginSuccess: true, userId: user._id });
       });
     });
   });
