@@ -25,6 +25,10 @@ http.listen(port, () => {
   console.log(`listening on ${port}`);
 });
 
+app.get('/api/hello', (req, res) => {
+  res.send('Hello World!!');
+});
+
 app.get('/', (req, res) => {
   res.send('Hello World');
 });
