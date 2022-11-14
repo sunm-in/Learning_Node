@@ -1,5 +1,6 @@
 {
   "devDependencies": {
-    "minimatch": "^5.1.0"
+    "minimatch": "^5.1.0",
+    "mongoose": "^6.7.2"
   }
 }
